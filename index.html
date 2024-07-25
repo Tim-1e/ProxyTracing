@@ -5,7 +5,7 @@
 
 <head>
   <meta charset="utf-8" />
-  <title>SPCBPT</title>
+  <title>ProxyTracing</title>
   <meta content="NeuralSound." name="description" />
   <meta content="NeuralSound Networks" property="og:title" />
   <meta content="NeuralSound" property="og:description" />
@@ -118,12 +118,14 @@
   <div class="all-wrap">
     <div class="section hero nerf-_v2">
       <div class="container-2 nerf_header_v2 w-container">
-        <h1 class="nerf_title_v2">SPCBPT: Subspace-based Probabilistic Connections for Bidirectional Path Tracing</h1>
-        <h1 class="nerf_subheader_v2">SIGGRAPH 2022</h1>
+        <h1 class="nerf_title_v2">Proxy Tracing: Unbiased Reciprocal Estimation for Optimized Sampling in BDPT</h1>
+        <h1 class="nerf_subheader_v2">SIGGRAPH 2024</h1>
         <div class="nerf_authors_list_single w-row row-name">
           <h1 class="nerf_affiliation_v2" style="margin-right: 20px;">Fujia Su</h1>
+          <h1 class="nerf_affiliation_v2" style="margin-right: 20px;">Bingxuan Li</h1>
+          <h1 class="nerf_affiliation_v2" style="margin-right: 20px;">Qingyang Yin</h1>
+          <h1 class="nerf_affiliation_v2" style="margin-right: 20px;">Yanchen Zhang</h1>
           <h1 class="nerf_affiliation_v2" style="margin-right: 20px;">Sheng Li</h1>
-          <h1 class="nerf_affiliation_v2" style="margin-right: 20px;">Guoping Wang</h1> 
         </div>
 
         <div class="nerf_authors_list_single nerf_authors_affiliation w-row"
@@ -134,7 +136,7 @@
 
 
         <div>
-          <span class="center"><img src="images/teaser.jpg"></span>
+          <span class="center"><img src="images/teaser.png"></span>
         </div>
 
         <div class="w-container w-row">
@@ -143,7 +145,7 @@
               <img src="./images/paper.png" alt="paper" class="paper_img image-8 github_icon_nerf_v2" /></a>
           </div>
           <div class="w-col w-col-4 w-col-small-3 w-col-tiny-3">
-            <a href="https://github.com/ssufujia/SPCBPT-Code" target="_blank" class="link-block w-inline-block">
+            <a href="https://github.com/ssufujia/SPCBPT-OptiX7/tree/DropOutTracing" target="_blank" class="link-block w-inline-block">
               <img src="./images/github.png" alt="github"
                 class="paper_img image-8 github_icon_nerf_v2" /></a>
           </div>
@@ -191,8 +193,7 @@
     <div data-anchor="slide1" class="section nerf_section">
       <div class="w-container">
         <h2 class="white_section_nerf">Abstract</h2>
-        <p class="paragraph-3 nerf_text long-text">Bidirectional path tracing (BDPT) can be accelerated by selecting appropriate light sub-paths for connection. However, existing algorithms need to perform frequent distribution reconstruction and have expensive overhead. We present a novel approach, SPCBPT, for probabilistic connections that constructs the light selection distribution in sub-path space. Our approach bins the sub-paths into multiple subspaces and keeps the sub-paths in the same subspace of low discrepancy, wherein the light sub-paths can be selected by a subspace-based two-stage sampling method, i.e., first sampling the light subspace and then resampling the light sub-paths within this subspace. 
-          The subspace-based distribution is free of reconstruction and provides efficient light selection at a very low cost. We also propose a method that considers the Multiple Importance Sampling (MIS) term in the light selection and thus obtain an MIS-aware distribution that can minimize the upper bound of variance of the combined estimator. Prior methods typically omit this MIS weights term. We evaluate our algorithm using various benchmarks, and the experimental results show that our approach has superior performance and can significantly reduce the noise compared with the state-of-the-art method. 
+        <p class="paragraph-3 nerf_text long-text">Robust light transport algorithms, particularly bidirectional path tracing (BDPT), face significant challenges when dealing with specular or highly glossy involved paths. BDPT constructs the full path by connecting sub-paths traced individually from the light source and camera. However, it remains difficult to sample by connecting vertices on specular and glossy surfaces with narrow-lobed BSDF, as it poses severe constraints on sampling in the feasible direction. To address this issue, we propose a novel approach, called proxy sampling, that enables efficient sub-path connection of these challenging paths. When a low-contribution specular/glossy connection occurs, we drop out the problematic neighboring vertex next to this specular/glossy vertex from the original path, then retrace an alternative sub-path as a proxy to complement this incomplete path. This newly constructed complete path ensures that the connection adheres to the constraint of the narrow lobe within the BSDF of the specular/glossy surface. Unbiased reciprocal estimation is the key to our method to obtain a probability density function (PDF) reciprocal to ensure unbiased rendering. We derive the reciprocal estimation method and provide an efficiency-optimized setting for efficient sampling and connection. Our method provides a robust tool for substituting problematic paths with favorable alternatives while ensuring unbiasedness. We validate this approach in the probabilistic connections BDPT for addressing specular-involved difficult paths. Experimental results have proved the effectiveness and efficiency of our approach, showcasing high-performance rendering capabilities across diverse settings.
          </p>
       </div>
     </div>
@@ -205,13 +206,24 @@
         <div class="grey_container w-container">
           <div class="bibtex" style="text-align:left;font-size:larger;margin-left: 40px;">
             <pre><code>
-@inproceedings{su2022SPCBPT,
-    title={SPCBPT: Subspace-based Probabilistic Connections for Bidirectional Path Tracing},
-    author={Su, Fujia and Li, Sheng and Wang, Guoping},
-    url = {https://doi.org/10.1145/3528223.3530183},
-    journal = {ACM Transactions on Graphics (Proceedings of SIGGRAPH 2022)},
-    year={2022}
-}
+              @article{10.1145/3658216,
+                author = {Su, Fujia and Li, Bingxuan and Yin, Qingyang and Zhang, Yanchen and Li, Sheng},
+                title = {Proxy Tracing: Unbiased Reciprocal Estimation for Optimized Sampling in BDPT},
+                year = {2024},
+                issue_date = {July 2024},
+                publisher = {Association for Computing Machinery},
+                address = {New York, NY, USA},
+                volume = {43},
+                number = {4},
+                issn = {0730-0301},
+                url = {https://doi.org/10.1145/3658216},
+                doi = {10.1145/3658216},
+                journal = {ACM Trans. Graph.},
+                month = {jul},
+                articleno = {97},
+                numpages = {21},
+                keywords = {bidirectional path tracing, reciprocal estimation, importance sampling, proxy sampling, difficult path}
+                }
             </code></pre>
           </div>
         </div>
